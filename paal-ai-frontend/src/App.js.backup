@@ -1,0 +1,100 @@
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [command, setCommand] = useState("");
+  const [response, setResponse] = useState("");
+  const [currentWord, setCurrentWord] = useState("Innovation");
+
+  const words = ["Innovation", "Creativity", "AI Excellence", "Empowerment"];
+
+  // Transition words every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prevWord) => {
+        const currentIndex = words.indexOf(prevWord);
+        const nextIndex = (currentIndex + 1) % words.length;
+        return words[nextIndex];
+      });
+    }, 3000);
+
+    return () => clearInterval(interval); // Cleanup interval
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:5000/process-command", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command }),
+      });
+
+      const data = await res.json();
+      setResponse(data.message || "Command executed successfully.");
+    } catch (error) {
+      setResponse("Error: Unable to process the command.");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white flex flex-col items-center relative">
+      {/* Header Section */}
+      <header className="absolute top-8 left-8 flex items-center">
+        <img
+          src="/paal-logo.png"
+          alt="Paal AI Logo"
+          className="h-12 w-auto mr-4"
+        />
+        <h1 className="text-3xl font-bold">Paal AI</h1>
+      </header>
+
+      {/* Animated Robot Image */}
+      <img
+        src="/robot.png"
+        alt="Robotic PC"
+        className="absolute left-8 top-1/3 h-48 w-auto animate-bounce"
+      />
+
+      {/* Center Content */}
+      <div className="flex flex-col items-center mt-40 text-center">
+        <div>
+          <h2 className="text-5xl font-bold mb-4 animate-pulse">AI-Powered-PC</h2>
+          <p className="text-lg italic text-gray-200 transition duration-500">
+            "{currentWord}" {/* This word will transition */}
+          </p>
+        </div>
+        <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4 w-full max-w-lg">
+          <textarea
+            className="p-4 text-black w-full h-40 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your command..."
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+          ></textarea>
+          <button
+            type="submit"
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 hover:scale-105 transition-transform transform font-semibold"
+          >
+            Submit
+          </button>
+        </form>
+
+        {/* Response Section */}
+        {response && (
+          <div className="mt-6 bg-white text-black p-4 rounded-lg shadow-lg w-full max-w-lg">
+            <p>{response}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <footer className="absolute bottom-4 right-4 text-sm text-gray-300">
+        <p>
+          Powered by <span className="text-blue-400 font-bold">Paal AI</span>
+        </p>
+      </footer>
+    </div>
+  );
+};
+
+export default App;

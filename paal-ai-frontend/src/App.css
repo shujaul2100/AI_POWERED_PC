@@ -1,0 +1,83 @@
+.app {
+  text-align: left;
+  background: linear-gradient(to right, #6a3093, #a044ff); /* Purplish gradient background */
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-logo {
+  height: 50px; /* Resizing the logo */
+  margin-right: 20px; /* Spacing between logo and text */
+}
+
+.chat-container {
+  width: 60%; /* Increased width of the chat container */
+  max-width: 800px; /* Max width to manage larger screens */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.message {
+  background-color: rgba(0, 255, 255, 0.1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-left: 3px solid cyan;
+}
+
+.message-form {
+  display: flex;
+  width: 100%;
+}
+
+.message-input, .send-button {
+  padding: 10px;
+  margin: 5px;
+}
+
+.message-input {
+  flex-grow: 1;
+  border: 1px solid cyan;
+  background: transparent;
+  color: white;
+}
+
+.send-button {
+  background: cyan;
+  border: none;
+  cursor: pointer;
+}
+
+.app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+  padding: 10px;
+}
