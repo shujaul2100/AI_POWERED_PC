@@ -6,7 +6,7 @@ from interpreter import interpreter
 
 # Configure the model directly
 interpreter.llm.model = "gpt-4o-mini"
-interpreter.llm.api_key = "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"
+interpreter.llm.api_key = ""
 interpreter.auto_run = True  # Ensure interpreter automatically runs without manual triggers
 
 app = FastAPI()
